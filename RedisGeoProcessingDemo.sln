@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisGeoProcessingDemo", "RedisGeoProcessingDemo\RedisGeoProcessingDemo.csproj", "{3BEB20F5-2211-403D-A11D-3FA3D6F36096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisGeoProcessingDemo", "RedisGeoProcessingDemo\RedisGeoProcessingDemo.csproj", "{3BEB20F5-2211-403D-A11D-3FA3D6F36096}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{E25EF84C-7B5B-4BB3-8977-FE640C8343E1}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		gb.json = gb.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
