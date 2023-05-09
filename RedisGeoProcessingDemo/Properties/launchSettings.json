@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "RedisGeoProcessingDemo": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:32419;http://localhost:32420"
+    }
+  }
+}

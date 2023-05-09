@@ -1,11 +1,4 @@
-﻿using RedisGeoProcessingDemo.Data;
-using StackExchange.Redis;
-using System.Text.Json;
-
-var fileName = "D:\\Develop\\RedisGeoProcessingDemo\\gb.json";
-
-//using FileStream openStream = File.OpenRead(fileName);
-//var cities = await JsonSerializer.DeserializeAsync<CityRecord[]>(openStream);
+﻿using StackExchange.Redis;
 
 var options = ConfigurationOptions.Parse("localhost:6379");
 options.Password = "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81";
@@ -13,6 +6,8 @@ options.Password = "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81";
 var redis = ConnectionMultiplexer.Connect(options);
 
 var db = redis.GetDatabase();
+
+//await AddDataToRedis.Add(db);
 
 var key = "1"; 
 var value = "A";
@@ -23,16 +18,20 @@ value = db.StringGet(key);
 
 Console.WriteLine($"Key value: {value}");
 
-//foreach (var city in cities!)
-//{
-//    var geoEntry = new GeoEntry(Convert.ToDouble(city.Lat), Convert.ToDouble(city.Lng), city.City);
-
-//    await db.GeoAddAsync("UK", geoEntry);
-
-//   Console.WriteLine($"{city.City} {city.Lat} {city.Lng}");
-//}
-
 Console.WriteLine(await db.GeoDistanceAsync("UK", "Bristol", "Charfield", GeoUnit.Miles));
 Console.WriteLine(await db.GeoDistanceAsync("UK", "Bristol", "Alford", GeoUnit.Miles));
 
-Console.WriteLine(await db.GeoSearchAsync("UK", );
+var result = await db.GeoSearchAsync("UK", Convert.ToDouble("51.454514"), Convert.ToDouble("-2.587910"), new GeoSearchCircle(Convert.ToDouble("20.5"), GeoUnit.Miles));
+
+//foreach (var item in result)
+//{
+//    Console.WriteLine($"{item.Member} {item.Position} {item.Distance} miles");
+//}
+
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/", () => result.ToList());
+
+app.Run();
