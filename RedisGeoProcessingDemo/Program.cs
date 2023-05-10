@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using RedisGeoProcessingDemo.Data;
+using StackExchange.Redis;
 
 var options = ConfigurationOptions.Parse("localhost:6379");
 options.Password = "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81";
@@ -7,7 +8,7 @@ var redis = ConnectionMultiplexer.Connect(options);
 
 var db = redis.GetDatabase();
 
-//await AddDataToRedis.Add(db);
+await AddDataToRedis.Add(db);
 
 var key = "1"; 
 var value = "A";
