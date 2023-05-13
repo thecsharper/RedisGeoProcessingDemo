@@ -31,8 +31,19 @@ var result = await db.GeoSearchAsync("UK", Convert.ToDouble("51.454514"), Conver
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+                      builder =>
+                      {
+                          builder.WithOrigins("https://localhost:7113", "http://localhost:7113", "https://localhost:32419").AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true);
+                      });
+
+});
 var app = builder.Build();
 
+app.UseCors();
 app.MapGet("/", () => result.ToList());
 
 app.Run();

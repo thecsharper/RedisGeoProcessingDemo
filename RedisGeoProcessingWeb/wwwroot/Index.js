@@ -40,23 +40,23 @@ async function initMap() {
     $.getJSON("https://localhost:32419/", function (data) {
         var items = [];
         $.each(data, function (key, val) {
-            items.push("<li id='" + key + "'>" + val + "</li>");
+            items.push(val);
         });
+        $(
 
-        $("<ul/>", {
-            "class": "my-new-list",
-            html: items.join("")
-        }).appendTo("body");
-    });
+            items.forEach(function (number) {
+                new google.maps.Marker({
+                    position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
+                    title: String(number.distance) 
+                }).setMap(map);
+            })
 
 
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        title: "Hello Worldxx!"
+        )
     });
 
     // To add the marker to the map, call setMap();
-    marker.setMap(map);
+    //marker.setMap(map);
 }
 
 initMap();
