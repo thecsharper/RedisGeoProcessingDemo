@@ -1,5 +1,4 @@
-﻿// Initialize and add the map
-let map;
+﻿let map;
 
 async function initMap() {
 
@@ -17,10 +16,15 @@ async function initMap() {
     new google.maps.Marker({
         position: position,
         map,
-        title: "Hello World!",
+        title: "Initial point",
     });
 
-    $.getJSON("https://localhost:32419/", function (data) {
+    $.getJSON("https://localhost:32419/",
+        {
+            lat: "54.9783",
+            lng: "1.6178"
+        },
+        function (data) {
         var items = [];
         $.each(data, function (key, val) {
             items.push(val);

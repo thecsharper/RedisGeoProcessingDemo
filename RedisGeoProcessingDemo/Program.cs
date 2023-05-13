@@ -28,19 +28,26 @@ var app = builder.Build();
 
 app.UseCors();
 
-app.MapGet("/", async (string? lat, string? lng) => await GetGeoResults(db, Convert.ToDouble("-2.587910"), Convert.ToDouble("51.454514")));
+app.MapGet("/", async (string? lat, string? lng) => await GetGeoResults(db, lat, lng));
 
 app.Run();
 
-async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, double lat, double lng)
+async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, string? lng)
 {
-    if (!dataLoaded)
+    // TODO a better mechanism needed
+    //if (!dataLoaded)
+    //{
+    //    await AddDataToRedis.Add(db);
+    //    dataLoaded = true;
+    //}
+
+    if(string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng)) 
     {
-        await AddDataToRedis.Add(db);
-        dataLoaded = true;
+        lat = "51.454514";
+        lng = "-2.587910";
     }
 
-    var results = await database.GeoSearchAsync("UK", lng, lat, new GeoSearchCircle(Convert.ToDouble("20.5"), GeoUnit.Miles));
+    var results = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("100.5"), GeoUnit.Miles));
 
     return results;
 }
