@@ -8,42 +8,39 @@ var redis = ConnectionMultiplexer.Connect(options);
 
 var db = redis.GetDatabase();
 
-await AddDataToRedis.Add(db);
-
-var key = "1"; 
-var value = "A";
-
-db.StringSet(key, value);
-
-value = db.StringGet(key);
-
-Console.WriteLine($"Key value: {value}");
-
-Console.WriteLine(await db.GeoDistanceAsync("UK", "Bristol", "Charfield", GeoUnit.Miles));
-Console.WriteLine(await db.GeoDistanceAsync("UK", "Bristol", "Alford", GeoUnit.Miles));
-
-var result = await db.GeoSearchAsync("UK", Convert.ToDouble("51.454514"), Convert.ToDouble("-2.587910"), new GeoSearchCircle(Convert.ToDouble("20.5"), GeoUnit.Miles));
-
-//foreach (var item in result)
-//{
-//    Console.WriteLine($"{item.Member} {item.Position} {item.Distance} miles");
-//}
-
+var dataLoaded = false;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
-                      builder =>
-                      {
-                          builder.WithOrigins("https://localhost:7113", "http://localhost:7113", "https://localhost:32419").AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true);
-                      });
-
+            builder =>
+            {
+                builder.WithOrigins("https://localhost:7113", "http://localhost:7113", "https://localhost:32419")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true);
+            });
 });
+
 var app = builder.Build();
 
 app.UseCors();
-app.MapGet("/", () => result.ToList());
+
+app.MapGet("/", async (string? lat, string? lng) => await GetGeoResults(db, Convert.ToDouble("-2.587910"), Convert.ToDouble("51.454514")));
 
 app.Run();
+
+async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, double lat, double lng)
+{
+    if (!dataLoaded)
+    {
+        await AddDataToRedis.Add(db);
+        dataLoaded = true;
+    }
+
+    var results = await database.GeoSearchAsync("UK", lng, lat, new GeoSearchCircle(Convert.ToDouble("20.5"), GeoUnit.Miles));
+
+    return results;
+}
