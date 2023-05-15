@@ -8,9 +8,9 @@ async function seedData() {
         .done(function () {
             initMap();
             console.log("second success");
-        })
-        .fail(function () {
-            console.log("error");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log("error " + textStatus);
+            console.log("incoming Text " + jqXHR.responseText + " " + errorThrown);
         })
         .always(function () {
             console.log("complete");
