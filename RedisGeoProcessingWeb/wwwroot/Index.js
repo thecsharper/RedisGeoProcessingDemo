@@ -1,22 +1,5 @@
 ﻿let map;
 
-async function seedData() {
-
-    $.getJSON("https://localhost:32419/load", function () {
-        console.log("success");
-    })
-        .done(function () {
-            initMap();
-            console.log("second success");
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.log("error " + textStatus);
-            console.log("incoming Text " + jqXHR.responseText + " " + errorThrown);
-        })
-        .always(function () {
-            console.log("complete");
-        });
-}
-
 async function initMap() {
 
     const position = { lat: 51.454514, lng: -2.58 };
@@ -57,5 +40,4 @@ async function initMap() {
     });
 }
 
-//seedData();
 initMap();
