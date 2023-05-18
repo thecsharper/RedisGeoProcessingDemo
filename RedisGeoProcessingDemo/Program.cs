@@ -1,12 +1,17 @@
 ﻿using RedisGeoProcessingDemo.Data;
 using StackExchange.Redis;
+using System.Text.Json;
 
+var fileName = "D:\\Develop\\RedisGeoProcessingDemo\\gb.json";
 var options = ConfigurationOptions.Parse("localhost:6379");
 options.Password = "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81";
 
 var redis = ConnectionMultiplexer.Connect(options);
 
 var db = redis.GetDatabase();
+
+using FileStream openStream = File.OpenRead(fileName);
+var cities = await JsonSerializer.DeserializeAsync<CityRecord[]>(openStream);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +31,7 @@ var app = builder.Build();
 
 app.UseCors();
 
-app.MapGet("/load", async () => await AddDataToRedis.Add(db));
+app.MapGet("/load", async () => await AddDataToRedis.Add(db, cities!));
 
 app.MapGet("/", async (string? lat, string? lng) => await GetGeoResults(db, lat, lng));
 

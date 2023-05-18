@@ -5,12 +5,8 @@ namespace RedisGeoProcessingDemo.Data
 {
     public static class AddDataToRedis
     {
-        public static async Task Add(IDatabase db)
+        public static async Task Add(IDatabase db, CityRecord[] cities)
         {
-            var fileName = "D:\\Develop\\RedisGeoProcessingDemo\\gb.json";
-            using FileStream openStream = File.OpenRead(fileName);
-            var cities = await JsonSerializer.DeserializeAsync<CityRecord[]>(openStream);
-
             foreach (var city in cities!)
             {
                 var geoEntry = new GeoEntry(Convert.ToDouble(city.Lat), Convert.ToDouble(city.Lng), city.City);
