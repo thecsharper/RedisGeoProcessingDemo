@@ -4,7 +4,7 @@ using StackExchange.Redis;
 using RedisGeoProcessingDemo.Data;
 
 namespace RedisGeoProcessingDemoTests
-{
+{ 
     public class AddDataToRedisTests
     {
         private readonly Mock<IDatabase>? _database;
@@ -14,9 +14,14 @@ namespace RedisGeoProcessingDemoTests
         {
             // Arrange
 
-            CityRecord[] cityRecords = { };
-          
-            _database!.Setup(x => x.GeoAddAsync(It.IsAny<RedisKey>(), It.IsAny<GeoEntry>(), It.IsAny<CommandFlags>())).ReturnsAsync(true);
+            var key = new RedisKey("test");
+
+            CityRecord[] cityRecords = { new CityRecord() };
+
+            var geoEntry = new GeoEntry(Convert.ToDouble(51.1), Convert.ToDouble(-1.12), "city");
+
+            _database.SetupAllProperties();
+            _database!.Setup(x => x.GeoAddAsync(key, geoEntry, CommandFlags.None)).ReturnsAsync(true);
 
             // Act
             await AddDataToRedis.Add(_database.Object, cityRecords);
