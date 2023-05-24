@@ -13,6 +13,19 @@ async function initMap() {
         mapId: "DEMO_MAP_ID",
     });
 
+    function placeMarkerAndPanTo(latLng, map) {
+        new google.maps.Marker({
+            position: latLng,
+            map: map,
+        });
+        map.panTo(latLng);
+    }
+
+
+    map.addListener("click", (e) => {
+        placeMarkerAndPanTo(e.latLng, map);
+    });
+
     new google.maps.Marker({
         position: position,
         map,
