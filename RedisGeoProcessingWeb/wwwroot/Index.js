@@ -21,9 +21,9 @@ async function initMap() {
         map.panTo(latLng);
     }
 
-
     map.addListener("click", (e) => {
         placeMarkerAndPanTo(e.latLng, map);
+        getMarkers(e.latLng.lat, e.latLng.lng);
     });
 
     new google.maps.Marker({
@@ -31,6 +31,29 @@ async function initMap() {
         map,
         title: "Initial point",
     });
+
+    function getMarkers(lat, lng) {
+
+        $.getJSON("https://localhost:32419/",
+            {
+                lat: lat,
+                lng: lng
+            },
+            function (data) {
+                var items = [];
+                $.each(data, function (key, val) {
+                    items.push(val);
+                });
+                $(
+                    items.forEach(function (number) {
+                        new google.maps.Marker({
+                            position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
+                            title: String(number.distance)
+                        }).setMap(map);
+                    })
+                )
+            });
+    }
 
     $.getJSON("https://localhost:32419/",
         {

@@ -45,7 +45,7 @@ async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, str
         lng = "-2.587910";
     }
 
-    var results = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("300.5"), GeoUnit.Miles));
+    var results = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("10"), GeoUnit.Miles));
 
     return results;
 }
