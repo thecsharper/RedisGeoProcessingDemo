@@ -1,5 +1,5 @@
 ﻿let map;
-
+let markersArray = [];
 async function initMap() {
 
     const position = { lat: 51.454514, lng: -2.58 };
@@ -14,11 +14,12 @@ async function initMap() {
     });
 
     function placeMarkerAndPanTo(latLng, map) {
-        new google.maps.Marker({
+       let marker = new google.maps.Marker({
             position: latLng,
             map: map,
         });
         map.panTo(latLng);
+        markersArray.push(marker);
     }
 
     map.addListener("click", (e) => {
@@ -32,15 +33,18 @@ async function initMap() {
         title: "Initial point",
     });
 
-    function setMapOnAll(map) {
-        for (let i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
+    function deleteOverlays() {
+        if (markersArray) {
+            for (var i in markersArray) {
+                markersArray[i].setMap(null);
+            }
+            markersArray.length = 0;
         }
     }
 
     function getMarkers(lat, lng) {
 
-        setMapOnAll(null);
+       // deleteOverlays();
 
         $.getJSON("https://localhost:32419/",
             {
@@ -54,10 +58,12 @@ async function initMap() {
                 });
                 $(
                     items.forEach(function (number) {
-                        new google.maps.Marker({
+                       var mark = new google.maps.Marker({
                             position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
                             title: String(number.distance)
-                        }).setMap(map);
+                       }).setMap(map);
+                        markersArray.push(mark);
+                      
                     })
                 )
             });
