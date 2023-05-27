@@ -32,7 +32,15 @@ async function initMap() {
         title: "Initial point",
     });
 
+    function setMapOnAll(map) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
     function getMarkers(lat, lng) {
+
+        setMapOnAll(null);
 
         $.getJSON("https://localhost:32419/",
             {
