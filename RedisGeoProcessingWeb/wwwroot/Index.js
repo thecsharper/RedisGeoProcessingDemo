@@ -58,17 +58,16 @@ async function initMap() {
                 });
                 $(
                     items.forEach(function (number) {
-                       var mark = new google.maps.Marker({
+                       new google.maps.Marker({
                             position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
-                            title: String(number.distance)
+                            title: String("Distance to selected: " + number.distance)
                        }).setMap(map);
-                        markersArray.push(mark);
-                      
                     })
                 )
             });
     }
 
+    // Runs on load to get initial marker point
     $.getJSON("https://localhost:32419/",
         {
             lat: "54.9783",
