@@ -10,7 +10,7 @@ async function initMap() {
     map = new Map(document.getElementById("map"), {
         zoom: 10,
         center: position,
-        mapId: "DEMO_MAP_ID",
+        mapId: "Demo_Map",
     });
 
     function placeMarkerAndPanTo(latLng, map) {
@@ -61,18 +61,8 @@ async function initMap() {
                     });
                     markersArray.push(marker);
                     marker.setMap(map);
-                });
-                $(
-                    //items.forEach(function (number) {
-                    //   new google.maps.Marker({
-                    //        position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
-                    //        title: String("Distance to selected: " + number.distance)
-                    //   }).setMap(map);
-                    //})
-                )
+                });              
             });
-
-            // markersArray.push(marker);
     }
 
     // Runs on load to get initial marker point
