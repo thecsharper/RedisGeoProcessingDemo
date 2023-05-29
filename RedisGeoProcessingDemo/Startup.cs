@@ -25,7 +25,6 @@
         {
             app.UseCors();
 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -34,7 +33,6 @@
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
 
             app.UseEndpoints(endpoints =>
             {

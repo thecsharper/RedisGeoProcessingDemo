@@ -35,17 +35,26 @@ app.MapGet("/load", async () => await AddDataToRedis.Add(db, cities!));
 
 app.MapGet("/", async (string? lat, string? lng) => await GetGeoResults(db, lat, lng));
 
+app.MapGet("/places", async () => await GetAllPlaces(db));
+
 app.Run();
 
 async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, string? lng)
 {
-    if(string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng)) 
+    if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
     {
         lat = "51.454514";
         lng = "-2.587910";
     }
 
     var results = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("10"), GeoUnit.Miles));
+
+    return results;
+}
+
+async Task<GeoRadiusResult[]> GetAllPlaces(IDatabase database)
+{
+    var results = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
 
     return results;
 }
