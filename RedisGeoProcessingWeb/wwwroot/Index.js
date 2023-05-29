@@ -44,7 +44,7 @@ async function initMap() {
 
     function getMarkers(lat, lng) {
 
-       // deleteOverlays();
+        deleteOverlays();
 
         $.getJSON("https://localhost:32419/",
             {
@@ -55,16 +55,24 @@ async function initMap() {
                 var items = [];
                 $.each(data, function (key, val) {
                     items.push(val);
+                   var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(val.position.longitude, val.position.latitude),
+                        title: String("Distance to selected: " + val.distance)
+                    });
+                    markersArray.push(marker);
+                    marker.setMap(map);
                 });
                 $(
-                    items.forEach(function (number) {
-                       new google.maps.Marker({
-                            position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
-                            title: String("Distance to selected: " + number.distance)
-                       }).setMap(map);
-                    })
+                    //items.forEach(function (number) {
+                    //   new google.maps.Marker({
+                    //        position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
+                    //        title: String("Distance to selected: " + number.distance)
+                    //   }).setMap(map);
+                    //})
                 )
             });
+
+            // markersArray.push(marker);
     }
 
     // Runs on load to get initial marker point
