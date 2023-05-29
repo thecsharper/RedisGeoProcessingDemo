@@ -52,9 +52,25 @@ async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, str
     return results;
 }
 
-async Task<GeoRadiusResult[]> GetAllPlaces(IDatabase database)
+async Task<List<Places>> GetAllPlaces(IDatabase database)
 {
     var results = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
 
-    return results;
+    var vals = results.ToList();
+    var places = new List<Places>();
+
+    foreach (var val in vals)
+    {
+        var place = new Places()
+        {
+            City = val.Member.ToString(),
+            Distance = val.Distance,
+            Lat = val.Position!.Value.Latitude,
+            Lng = val.Position.Value.Longitude
+        };
+
+        places.Add(place);
+    }
+
+    return places;
 }
