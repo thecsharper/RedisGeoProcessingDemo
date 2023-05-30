@@ -1,6 +1,7 @@
-﻿using RedisGeoProcessingDemo.Data;
+﻿using System.Text.Json;
+
+using RedisGeoProcessingDemo.Data;
 using StackExchange.Redis;
-using System.Text.Json;
 
 var fileName = "D:\\Develop\\RedisGeoProcessingDemo\\gb.json";
 var options = ConfigurationOptions.Parse("localhost:6379");
@@ -47,26 +48,25 @@ async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, str
         lng = "-2.587910";
     }
 
-    var results = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("10"), GeoUnit.Miles));
+    var geoResults = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("10"), GeoUnit.Miles));
 
-    return results;
+    return geoResults;
 }
 
 async Task<List<Places>> GetAllPlaces(IDatabase database)
 {
-    var results = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
+    var geoResults = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
 
-    var vals = results.ToList();
     var places = new List<Places>();
 
-    foreach (var val in vals)
+    foreach (var geoResult in geoResults.ToList())
     {
         var place = new Places()
         {
-            City = val.Member.ToString(),
-            Distance = val.Distance,
-            Lat = val.Position!.Value.Latitude,
-            Lng = val.Position.Value.Longitude
+            City = geoResult.Member.ToString(),
+            Distance = geoResult.Distance,
+            Lat = geoResult.Position!.Value.Latitude,
+            Lng = geoResult.Position.Value.Longitude
         };
 
         places.Add(place);
