@@ -84,7 +84,31 @@ async function initMap() {
                 }).setMap(map);
             })
          )
+        });
+
+    $(document).ready(function () {
+        $("#search-box").keyup(function () {
+            $.ajax({
+                type: "GET",
+                url: "ps://localhost:32419/places",
+                data: 'keyword=' + $(this).val(),
+                beforeSend: function () {
+                    $("#search-box").css("background", "#FFF url(LoaderIcon.gif) no-repeat 165px");
+                },
+                success: function (data) {
+                    $("#suggestion-box").show();
+                    $("#suggestion-box").html(data);
+                    $("#search-box").css("background", "#FFF");
+                }
+            });
+        });
     });
+    //To select a country name
+    function selectCountry(val) {
+        $("#search-box").val(val);
+        $("#suggestion-box").hide();
+    }
 }
 
 initMap();
+
