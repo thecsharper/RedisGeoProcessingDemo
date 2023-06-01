@@ -103,6 +103,7 @@ async function initMap() {
             });
         });
     });
+
     //To select a country name
     function selectCountry(val) {
         $("#search-box").val(val);
