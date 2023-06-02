@@ -90,7 +90,7 @@ async function initMap() {
         $("#search-box").keyup(function () {
             $.ajax({
                 type: "GET",
-                url: "ps://localhost:32419/places",
+                url: "https://localhost:32419/places",
                 data: 'keyword=' + $(this).val(),
                 beforeSend: function () {
                     $("#search-box").css("background", "#FFF url(LoaderIcon.gif) no-repeat 165px");

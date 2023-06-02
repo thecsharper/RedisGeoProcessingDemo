@@ -53,6 +53,7 @@ async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, str
     return geoResults;
 }
 
+// TODO this needs to accept a search pattern
 async Task<List<Places>> GetAllPlaces(IDatabase database)
 {
     var geoResults = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
