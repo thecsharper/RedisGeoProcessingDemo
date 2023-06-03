@@ -36,7 +36,7 @@ app.MapGet("/load", async () => await AddDataToRedis.Add(db, cities!));
 
 app.MapGet("/", async (string? lat, string? lng) => await GetGeoResults(db, lat, lng));
 
-app.MapGet("/places", async () => await GetAllPlaces(db));
+app.MapGet("/places", async (string? location) => await GetAllPlaces(db, location));
 
 app.Run();
 
@@ -54,7 +54,7 @@ async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, str
 }
 
 // TODO this needs to accept a search pattern
-async Task<List<Places>> GetAllPlaces(IDatabase database)
+async Task<List<Places>> GetAllPlaces(IDatabase database, string location)
 {
     var geoResults = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
 
@@ -62,16 +62,19 @@ async Task<List<Places>> GetAllPlaces(IDatabase database)
 
     foreach (var geoResult in geoResults.ToList())
     {
-        var place = new Places()
+        if (geoResult.Member.ToString().StartsWith(location,StringComparison.OrdinalIgnoreCase))
         {
-            City = geoResult.Member.ToString(),
-            Distance = geoResult.Distance,
-            Lat = geoResult.Position!.Value.Latitude,
-            Lng = geoResult.Position.Value.Longitude
-        };
+            var place = new Places()
+            {
+                City = geoResult.Member.ToString(),
+                Distance = geoResult.Distance,
+                Lat = geoResult.Position!.Value.Latitude,
+                Lng = geoResult.Position.Value.Longitude
+            };
 
-        places.Add(place);
+            places.Add(place);
+        }
     }
-
+    // TODO just return a place name?
     return places;
 }

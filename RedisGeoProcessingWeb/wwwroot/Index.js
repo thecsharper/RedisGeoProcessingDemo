@@ -91,13 +91,13 @@ async function initMap() {
             $.ajax({
                 type: "GET",
                 url: "https://localhost:32419/places",
-                data: 'keyword=' + $(this).val(),
+                data: 'location=' + $(this).val(),
                 beforeSend: function () {
                     $("#search-box").css("background", "#FFF url(LoaderIcon.gif) no-repeat 165px");
                 },
                 success: function (data) {
                     $("#suggestion-box").show();
-                    $("#suggestion-box").html(data);
+                    $("#suggestion-box").html(data.city);
                     $("#search-box").css("background", "#FFF");
                 }
             });
