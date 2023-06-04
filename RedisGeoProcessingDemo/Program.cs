@@ -54,15 +54,15 @@ async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, str
 }
 
 // TODO this needs to accept a search pattern
-async Task<List<Places>> GetAllPlaces(IDatabase database, string location)
+async Task<List<string>> GetAllPlaces(IDatabase database, string? location)
 {
     var geoResults = await database.GeoSearchAsync("UK", Convert.ToDouble("54.0840"), Convert.ToDouble("2.8594"), new GeoSearchCircle(Convert.ToDouble("350"), GeoUnit.Miles));
 
-    var places = new List<Places>();
+    var places = new List<string>();
 
     foreach (var geoResult in geoResults.ToList())
     {
-        if (geoResult.Member.ToString().StartsWith(location,StringComparison.OrdinalIgnoreCase))
+        if (geoResult.Member.ToString().StartsWith(location!,StringComparison.OrdinalIgnoreCase))
         {
             var place = new Places()
             {
@@ -72,7 +72,7 @@ async Task<List<Places>> GetAllPlaces(IDatabase database, string location)
                 Lng = geoResult.Position.Value.Longitude
             };
 
-            places.Add(place);
+            places.Add(place.City);
         }
     }
     // TODO just return a place name?
