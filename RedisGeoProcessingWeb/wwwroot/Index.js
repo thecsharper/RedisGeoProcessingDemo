@@ -97,7 +97,7 @@ async function initMap() {
                 },
                 success: function (data) {
                     $("#suggestion-box").show();
-                    $("#suggestion-box").html(data.city);
+                    $("#suggestion-box").html(data);
                     $("#search-box").css("background", "#FFF");
                 }
             });
