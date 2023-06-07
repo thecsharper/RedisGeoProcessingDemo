@@ -4,10 +4,20 @@
     ViewData["Title"] = "Maps Demo";
 }
 
+<script>
+    //To select a country name
+    function selectCountry(val) {
+        $("#search-box").val(val);
+        $("#suggestion-box").hide();
+    }
+</script>
+
 <div class="frmSearch">
     <input type="text" id="search-box" placeholder="Country Name" />
     <div id="suggestion-box"></div>
 </div>
+<ul id="country-list">
+</ul>
 
 <div id="map"></div>
 

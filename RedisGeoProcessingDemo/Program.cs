@@ -65,10 +65,10 @@ async Task<List<string>> GetAllPlaces(IDatabase database, string? location)
         {
             var place = new Places()
             {
-                City = geoResult.Member.ToString(),
+                City = geoResult.Member.ToString().Trim(),
             };
 
-            places.Add(place.City);
+            places.Add($"<li onClick = \"selectCountry('{place.City}');\">{place.City}</li>");
         }
     }
 

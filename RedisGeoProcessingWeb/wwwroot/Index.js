@@ -104,12 +104,15 @@ async function initMap() {
         });
     });
 
-    //To select a country name
-    function selectCountry(val) {
-        $("#search-box").val(val);
-        $("#suggestion-box").hide();
-    }
+
+    //$(document).ready(function () {
+    //    //To select a country name
+    //    function selectCountry(val) {
+    //        $("#search-box").val(val);
+    //        $("#suggestion-box").hide();
+    //    }
+    //});
+   
 }
 
 initMap();
-
