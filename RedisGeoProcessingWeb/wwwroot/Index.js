@@ -102,17 +102,7 @@ async function initMap() {
                 }
             });
         });
-    });
-
-
-    //$(document).ready(function () {
-    //    //To select a country name
-    //    function selectCountry(val) {
-    //        $("#search-box").val(val);
-    //        $("#suggestion-box").hide();
-    //    }
-    //});
-   
+    });  
 }
 
 initMap();
