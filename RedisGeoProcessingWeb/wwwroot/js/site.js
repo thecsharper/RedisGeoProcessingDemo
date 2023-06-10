@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function selectCountry(val) {
+    $("#search-box").val(val);
+    $("#suggestion-box").hide();
+}

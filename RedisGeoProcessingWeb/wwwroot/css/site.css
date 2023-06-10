@@ -18,20 +18,34 @@ body {
     margin-bottom: 60px;
     position: relative;
 }
+
+#map {
+    z-index: 10;
+    position: absolute;
+}
+
 #suggestion-box li {
     padding: 10px;
     background: #f0f0f0;
     border-bottom: #bbb9b9 1px solid;
-    z-index: 99;
+    /* z-index: 99;*/
+    display: block;
+    /* top: 0;
+    left: 0;*/
+    z-index: 1;
     position: relative;
+    overflow: visible;
 }
 
 #suggestion-box {
-    float: left;
+    float: initial;
     list-style: none;
     margin-top: -3px;
     padding: 0;
     width: 190px;
-    z-index: 99;
+    /*z-index: 99;*/
+    /*z-index: 7;*/
+    display: block;
+    z-index: 1;
     position: relative;
 }
