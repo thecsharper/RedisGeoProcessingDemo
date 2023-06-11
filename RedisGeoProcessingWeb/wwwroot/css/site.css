@@ -19,11 +19,6 @@ body {
     position: relative;
 }
 
-#map {
-    z-index: 10;
-    position: absolute;
-}
-
 #suggestion-box li {
     padding: 10px;
     background: #f0f0f0;

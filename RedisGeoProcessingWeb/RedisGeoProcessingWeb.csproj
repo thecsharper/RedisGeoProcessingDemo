@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\Index.js" />
-    <None Include="wwwroot\Style.css" />
+    <None Include="wwwroot\style.css" />
   </ItemGroup>
 
 </Project>
