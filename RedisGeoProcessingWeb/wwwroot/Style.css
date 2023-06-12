@@ -4,8 +4,8 @@
  */
 
 #map {
-    height: 200px; /* The height is 400 pixels */
-    width: 200px; /* The width is the width of the web page */
+    height: 600px; /* The height is 400 pixels */
+    width: 600px; /* The width is the width of the web page */
     z-index: 10;
     position: relative;
 }

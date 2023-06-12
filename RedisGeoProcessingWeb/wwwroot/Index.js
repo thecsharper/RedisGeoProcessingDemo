@@ -1,5 +1,6 @@
 ﻿let map;
 let markersArray = [];
+
 async function initMap() {
 
     const position = { lat: 51.454514, lng: -2.58 };
@@ -8,7 +9,7 @@ async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
 
     map = new Map(document.getElementById("map"), {
-        zoom: 10,
+        zoom: 7,
         center: position,
         mapId: "Demo_Map",
     });
