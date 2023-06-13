@@ -17,9 +17,11 @@ namespace RedisGeoProcessingDemo.Data
                     var place = new Places()
                     {
                         City = geoResult.Member.ToString().Trim(),
+                        Lat = geoResult.Position!.Value.Latitude,
+                        Lng = geoResult.Position!.Value.Longitude
                     };
 
-                    places.Add($"<li onClick = \"selectCountry('{place.City}');\">{place.City}</li>");
+                    places.Add($"<li onClick = \"selectCountry('{place.City}');\" data-lat=\"{place.Lat}\" data-lng=\"{place.Lng}\">{place.City}</li>");
                 }
             }
 
