@@ -21,12 +21,13 @@ namespace RedisGeoProcessingDemo.Data
                         Lng = geoResult.Position!.Value.Longitude
                     };
 
-                    places.Add($"<li onClick = \"selectCountry('{place.City}');\" data-lat=\"{place.Lat}\" data-lng=\"{place.Lng}\">{place.City}</li>");
+                    places.Add($"<li onClick = \"selectCountry('{place.City}');alert($(this).data());\" data-lat=\"{place.Lat}\" data-lng=\"{place.Lng}\">{place.City}</li>");
                 }
             }
 
             return places;
         }
+
        public async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, string? lng)
         {
             if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
