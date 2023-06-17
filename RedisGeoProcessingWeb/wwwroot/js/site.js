@@ -13,114 +13,121 @@ function selectCountry(val) {
 
 function selectMap(lat, lng) {
 
+    let latlng = new google.maps.LatLng(lng, lat);
+
     let marker = new google.maps.Marker({
-        position: { lat: lat, lng: lng },
+        position: latlng,
         map: map,
     });
 
-    map.panTo(latLng);
+    map.panTo(latlng);
     markersArray.push(marker);
 }
 
-const position = { lat: 51.454514, lng: -2.58 };
+async function initMap() {
 
-//@ts-ignore
-const { Map } = await google.maps.importLibrary("maps");
+    const position = { lat: 51.454514, lng: -2.58 };
 
-map = new Map(document.getElementById("map"), {
-    zoom: 7,
-    center: position,
-    mapId: "Demo_Map",
-});
+    //@ts-ignore
+    const { Map } = await google.maps.importLibrary("maps");
 
-function placeMarkerAndPanTo(latLng) {
-    let marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
+    map = new Map(document.getElementById("map"), {
+        zoom: 7,
+        center: position,
+        mapId: "Demo_Map",
     });
-    map.panTo(latLng);
-    markersArray.push(marker);
-}
 
-map.addListener("click", (e) => {
-    placeMarkerAndPanTo(e.latLng);
-    getMarkers(e.latLng.lat, e.latLng.lng);
-});
-
-new google.maps.Marker({
-    position: position,
-    map,
-    title: "Initial point",
-});
-
-function deleteOverlays() {
-    if (markersArray) {
-        for (var i in markersArray) {
-            markersArray[i].setMap(null);
-        }
-        markersArray.length = 0;
+    function placeMarkerAndPanTo(latLng) {
+        let marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+        });
+        map.panTo(latLng);
+        markersArray.push(marker);
     }
-}
 
-function getMarkers(lat, lng) {
+    map.addListener("click", (e) => {
+        placeMarkerAndPanTo(e.latLng);
+        getMarkers(e.latLng.lat, e.latLng.lng);
+    });
 
-    deleteOverlays();
+    new google.maps.Marker({
+        position: position,
+        map,
+        title: "Initial point",
+    });
 
+    function deleteOverlays() {
+        if (markersArray) {
+            for (var i in markersArray) {
+                markersArray[i].setMap(null);
+            }
+            markersArray.length = 0;
+        }
+    }
+
+    function getMarkers(lat, lng) {
+
+        deleteOverlays();
+
+        $.getJSON("https://localhost:32419/",
+            {
+                lat: lat,
+                lng: lng
+            },
+            function (data) {
+                var items = [];
+                $.each(data, function (key, val) {
+                    items.push(val);
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(val.position.longitude, val.position.latitude),
+                        title: String("Distance to selected: " + val.distance)
+                    });
+                    markersArray.push(marker);
+                    marker.setMap(map);
+                });
+            });
+    }
+
+    // Runs on load to get initial marker point
     $.getJSON("https://localhost:32419/",
         {
-            lat: lat,
-            lng: lng
+            lat: "54.9783",
+            lng: "1.6178"
         },
         function (data) {
             var items = [];
             $.each(data, function (key, val) {
                 items.push(val);
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(val.position.longitude, val.position.latitude),
-                    title: String("Distance to selected: " + val.distance)
-                });
-                markersArray.push(marker);
-                marker.setMap(map);
+            });
+            $(
+                items.forEach(function (number) {
+                    new google.maps.Marker({
+                        position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
+                        title: String(number.distance)
+                    }).setMap(map);
+                })
+            )
+        });
+
+    $(document).ready(function () {
+        $("#search-box").keyup(function () {
+            $.ajax({
+                type: "GET",
+                url: "https://localhost:32419/places",
+                data: 'location=' + $(this).val(),
+                beforeSend: function () {
+                    $("#search-box").css("background", "#FFF url(LoaderIcon.gif) no-repeat 165px");
+                },
+                success: function (data) {
+                    $("#suggestion-box").show();
+                    $("#suggestion-box").html(data);
+                    $("#search-box").css("background", "#FFF");
+                }
             });
         });
-}
-
-// Runs on load to get initial marker point
-$.getJSON("https://localhost:32419/",
-    {
-        lat: "54.9783",
-        lng: "1.6178"
-    },
-    function (data) {
-        var items = [];
-        $.each(data, function (key, val) {
-            items.push(val);
-        });
-        $(
-            items.forEach(function (number) {
-                new google.maps.Marker({
-                    position: new google.maps.LatLng(number.position.longitude, number.position.latitude),
-                    title: String(number.distance)
-                }).setMap(map);
-            })
-        )
     });
 
-$(document).ready(function () {
-    $("#search-box").keyup(function () {
-        $.ajax({
-            type: "GET",
-            url: "https://localhost:32419/places",
-            data: 'location=' + $(this).val(),
-            beforeSend: function () {
-                $("#search-box").css("background", "#FFF url(LoaderIcon.gif) no-repeat 165px");
-            },
-            success: function (data) {
-                $("#suggestion-box").show();
-                $("#suggestion-box").html(data);
-                $("#search-box").css("background", "#FFF");
-            }
-        });
-    });
-});
+};
 
+initMap();
