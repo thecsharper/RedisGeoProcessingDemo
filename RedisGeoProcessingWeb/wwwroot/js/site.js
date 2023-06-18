@@ -1,8 +1,6 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
-
 let map;
 let markersArray = [];
 
@@ -39,7 +37,6 @@ function selectCountry(val) {
 }
 
 function selectMap(lat, lng) {
-
     let latlng = new google.maps.LatLng(lng, lat);
 
     let marker = new google.maps.Marker({
@@ -51,8 +48,8 @@ function selectMap(lat, lng) {
     markersArray.push(marker);
     placeMarkerAndPanTo(latlng);
     getMarkers(lng, lat);
+    $("#search-box").val("");
 }
-
 
 function placeMarkerAndPanTo(latLng) {
     let marker = new google.maps.Marker({
@@ -62,7 +59,6 @@ function placeMarkerAndPanTo(latLng) {
     map.panTo(latLng);
     markersArray.push(marker);
 }
-
 
 function deleteOverlays() {
     if (markersArray) {
@@ -88,7 +84,8 @@ function getMarkers(lat, lng) {
                 items.push(val);
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(val.position.longitude, val.position.latitude),
-                    title: String("Distance to selected: " + val.distance)
+                    title: String("Distance to selected: " + val.distance),
+                    label: String("Distance to selected: " + val.distance)
                 });
 
                 markersArray.push(marker);
@@ -97,7 +94,6 @@ function getMarkers(lat, lng) {
         });
 }
 
-// Runs on load to get initial marker point
 $.getJSON("https://localhost:32419/",
     {
         lat: "54.9783",
@@ -135,4 +131,3 @@ $(document).ready(function () {
         });
     });
 });
-
