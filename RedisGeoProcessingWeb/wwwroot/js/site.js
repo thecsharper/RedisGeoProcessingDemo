@@ -6,9 +6,9 @@
 let map;
 let markersArray = [];
 
-async function initMap() {
+const position = { lat: 51.454514, lng: -2.58 };
 
-    const position = { lat: 51.454514, lng: -2.58 };
+async function initMap() {
 
     //@ts-ignore
     const { Map } = await google.maps.importLibrary("maps");
@@ -19,6 +19,16 @@ async function initMap() {
         mapId: "Demo_Map",
     });
 
+    map.addListener("click", (e) => {
+        placeMarkerAndPanTo(e.latLng);
+        getMarkers(e.latLng.lat, e.latLng.lng);
+    });
+
+    new google.maps.Marker({
+        position: position,
+        map,
+        title: "Initial point",
+    });
 };
 
 initMap();
@@ -40,7 +50,7 @@ function selectMap(lat, lng) {
     map.panTo(latlng);
     markersArray.push(marker);
     placeMarkerAndPanTo(latlng);
-    placeplace.getMarkers(lat, lng);
+    getMarkers(lng, lat);
 }
 
 
@@ -53,16 +63,6 @@ function placeMarkerAndPanTo(latLng) {
     markersArray.push(marker);
 }
 
-map.addListener("click", (e) => {
-    placeMarkerAndPanTo(e.latLng);
-    getMarkers(e.latLng.lat, e.latLng.lng);
-});
-
-new google.maps.Marker({
-    position: position,
-    map,
-    title: "Initial point",
-});
 
 function deleteOverlays() {
     if (markersArray) {
@@ -90,6 +90,7 @@ function getMarkers(lat, lng) {
                     position: new google.maps.LatLng(val.position.longitude, val.position.latitude),
                     title: String("Distance to selected: " + val.distance)
                 });
+
                 markersArray.push(marker);
                 marker.setMap(map);
             });
