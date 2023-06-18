@@ -106,13 +106,13 @@ function getMarkers(lat, lng) {
             $.each(data, function (key, val) {
                 items.push(val);
                 var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(val.position.longitude, val.position.latitude),
+                    position: new google.maps.LatLng(val.lng, val.lat),
                     title: String("Distance to selected: " + val.distance),
                     label: String("Distance to selected: " + val.distance)
                 });
 
                 const infowindow = new google.maps.InfoWindow({
-                    content: contentString,
+                    content: val.city,
                     ariaLabel: "Location",
                 });
 

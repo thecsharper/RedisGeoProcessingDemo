@@ -1,4 +1,5 @@
 ﻿using StackExchange.Redis;
+using System.Security.Cryptography.Xml;
 
 namespace RedisGeoProcessingDemo.Data
 {
@@ -28,7 +29,7 @@ namespace RedisGeoProcessingDemo.Data
             return placeItem;
         }
 
-       public async Task<GeoRadiusResult[]> GetGeoResults(IDatabase database, string? lat, string? lng)
+       public async Task<List<Places>> GetGeoResults(IDatabase database, string? lat, string? lng)
         {
             // Default location
             if (string.IsNullOrEmpty(lat) || string.IsNullOrEmpty(lng))
@@ -37,9 +38,24 @@ namespace RedisGeoProcessingDemo.Data
                 lng = "-2.587910";
             }
 
+            var places = new List<Places>();
+
             var geoResults = await database.GeoSearchAsync("UK", Convert.ToDouble(lat), Convert.ToDouble(lng), new GeoSearchCircle(Convert.ToDouble("10"), GeoUnit.Miles));
 
-            return geoResults;
+            foreach (var geoResult in geoResults.ToList())
+            {
+                    var place = new Places()
+                    {
+                        City = geoResult.Member.ToString().Trim(),
+                        Lat = geoResult.Position!.Value.Latitude,
+                        Lng = geoResult.Position!.Value.Longitude,
+                        Distance = geoResult.Distance
+                    };
+
+                places.Add(place);
+            }
+
+            return places;
         }
     }
 }
