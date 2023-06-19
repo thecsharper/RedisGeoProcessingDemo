@@ -108,12 +108,11 @@ function getMarkers(lat, lng) {
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(val.lng, val.lat),
                     title: String("Distance to selected: " + val.distance)
-                    //,
-                    //label: String("Distance to selected: " + val.distance)
+                    //,label: String("Distance to selected: " + val.distance)
                 });
 
                 const infowindow = new google.maps.InfoWindow({
-                    content: String("<b>" + val.city + "</b>" + " distance to selected: " + val.distance),
+                    content: String("<b>" + val.city + "</b>" + " - distance to selected: " + val.distance),
                     ariaLabel: "Location",
                 });
 
