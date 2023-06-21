@@ -18,7 +18,7 @@ namespace RedisGeoProcessingDemoTests
 
             CityRecord[] cityRecords = { new CityRecord() { Lat = "41.1", Lng = "-2.0" } };
 
-            var geoEntry = new GeoEntry(Convert.ToDouble(51.1), Convert.ToDouble(-1.12), "city");
+            var geoEntry = new GeoEntry(Convert.ToDouble(51.1), Convert.ToDouble(-1.12), new RedisValue("City"));
 
             _database!.Setup(x => x.GeoAddAsync(key, geoEntry, CommandFlags.None)).ReturnsAsync(true);
 
