@@ -6,6 +6,9 @@ let markersArray = [];
 
 const position = { lat: 51.454514, lng: -2.58 };
 
+const directionsService = new google.maps.DirectionsService();
+const directionsRenderer = new google.maps.DirectionsRenderer();
+
 async function initMap() {
 
     //@ts-ignore
@@ -26,6 +29,11 @@ async function initMap() {
         position: position,
         map,
         title: "Initial point",
+    });
+
+    directionsRenderer.setMap(map);
+    document.getElementById("submit").addEventListener("click", () => {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
     });
 };
 
