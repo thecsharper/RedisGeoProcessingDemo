@@ -153,6 +153,20 @@ $(document).ready(function () {
     });
 });
 
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    const waypts = [];
+    const checkboxArray = document.getElementById("waypoints");
+
+    for (let i = 0; i < checkboxArray.length; i++) {
+        if (checkboxArray.options[i].selected) {
+            waypts.push({
+                location: checkboxArray[i].value,
+                stopover: true,
+            });
+        }
+    }
+};
+
 
 //const contentString =
 //    '<div id="content">' +
