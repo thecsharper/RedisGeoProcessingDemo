@@ -6,10 +6,12 @@ let markersArray = [];
 
 const position = { lat: 51.454514, lng: -2.58 };
 
-const directionsService = new google.maps.DirectionsService();
-const directionsRenderer = new google.maps.DirectionsRenderer();
+
 
 async function initMap() {
+
+    const directionsService = await new google.maps.DirectionsService();
+    const directionsRenderer = await new google.maps.DirectionsRenderer();
 
     //@ts-ignore
     const { Map } = await google.maps.importLibrary("maps");
