@@ -8,11 +8,11 @@ const position = { lat: 51.454514, lng: -2.58 };
 
 async function initMap() {
 
-    //@ts-ignore
-    const { Map } = await google.maps.importLibrary("maps");
-
     const directionsService = await new google.maps.DirectionsService();
     const directionsRenderer = await new google.maps.DirectionsRenderer();
+
+    //@ts-ignore
+    const { Map } = await google.maps.importLibrary("maps");
 
     map = new Map(document.getElementById("map"), {
         zoom: 7,
@@ -37,7 +37,7 @@ async function initMap() {
     });
 };
 
-initMap();
+window.initMap = initMap;
 
 function selectCountry(val) {
     $("#search-box").val(val);
