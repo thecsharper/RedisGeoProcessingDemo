@@ -193,7 +193,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
             }
         })
-        .catch((e) => window.alert("Directions request failed due to " + status));
+        .catch((e) => window.alert("Directions request failed due to " + window.status));
 };
 
 
