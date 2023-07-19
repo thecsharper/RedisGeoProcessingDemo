@@ -44,6 +44,11 @@ function selectCountry(val) {
     $("#suggestion-box").hide();
 }
 
+function selectCountryDest(val) {
+    $("#search-box-dest").val(val);
+    $("#suggestion-box-dest").hide();
+}
+
 function selectMap(lat, lng) {
     let latlng = new google.maps.LatLng(lng, lat);
 
@@ -151,7 +156,26 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#search-box-dest").keyup(function () {
+        $.ajax({
+            type: "GET",
+            url: "https://localhost:32419/places",
+            data: 'location=' + $(this).val(),
+            beforeSend: function () {
+                $("#search-box-dest").css("background", "#FFF url(LoaderIcon.gif) no-repeat 165px");
+            },
+            success: function (data) {
+                $("#suggestion-box-dest").show();
+                $("#suggestion-box-dest").html(data);
+                $("#search-box-dest").css("background", "#FFF");
+            }
+        });
+    });
 });
+
+
+
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     const waypts = [];
