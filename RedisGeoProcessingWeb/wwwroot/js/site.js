@@ -103,7 +103,7 @@ function getMarkers(lat, lng) {
                 });
 
                 const infowindow = new google.maps.InfoWindow({
-                    content: String("<b>" + val.city + "</b>" + " - distance to selected: " + val.distance),
+                    content: String("<b>" + key + "</b>" + "<b>" + val.city + "</b>" + " - distance to selected: " + val.distance),
                     ariaLabel: "Location",
                 });
 
