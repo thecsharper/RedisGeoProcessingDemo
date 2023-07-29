@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{E25EF84C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisGeoProcessingWeb", "RedisGeoProcessingWeb\RedisGeoProcessingWeb.csproj", "{7649ADCD-7A62-41A4-96B9-81E102C68D37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisGeoProcessingDemoTests", "RedisGeoProcessingDemoTests\RedisGeoProcessingDemoTests.csproj", "{09877F48-C7CA-4BC8-BD7E-88F2B5E31B34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisGeoProcessingDemoTests", "RedisGeoProcessingDemoTests\RedisGeoProcessingDemoTests.csproj", "{09877F48-C7CA-4BC8-BD7E-88F2B5E31B34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisGeoProcessingWebSite", "RedisGeoProcessingWebSite\RedisGeoProcessingWebSite.csproj", "{2730A177-52AE-4D77-A3B5-65654B38179A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{09877F48-C7CA-4BC8-BD7E-88F2B5E31B34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09877F48-C7CA-4BC8-BD7E-88F2B5E31B34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09877F48-C7CA-4BC8-BD7E-88F2B5E31B34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2730A177-52AE-4D77-A3B5-65654B38179A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2730A177-52AE-4D77-A3B5-65654B38179A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2730A177-52AE-4D77-A3B5-65654B38179A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2730A177-52AE-4D77-A3B5-65654B38179A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
