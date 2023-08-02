@@ -173,10 +173,6 @@ $(document).ready(function () {
         });
     });
 });
-
-
-
-
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     const waypts = [];
     const checkboxArray = document.getElementById("waypoints");
@@ -219,8 +215,6 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         })
         .catch((e) => window.alert("Directions request failed due to " + window.status));
 };
-
-
 
 //const contentString =
 //    '<div id="content">' +
