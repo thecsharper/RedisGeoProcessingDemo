@@ -173,6 +173,7 @@ $(document).ready(function () {
         });
     });
 });
+
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     const waypts = [];
     const checkboxArray = document.getElementById("waypoints");
