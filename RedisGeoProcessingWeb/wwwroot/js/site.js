@@ -140,8 +140,8 @@ $.getJSON("https://localhost:32419/",
         )
     });
 
-$(document).ready(function () {
-    $("#search-box").keyup(function () {
+$(function () {
+    $("#search-box").trigger("keyup")(function () {
         $.ajax({
             type: "GET",
             url: "https://localhost:32419/places",
@@ -157,7 +157,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#search-box-dest").keyup(function () {
+    $("#search-box-dest").trigger("keyup")(function () {
         $.ajax({
             type: "GET",
             url: "https://localhost:32419/places",
