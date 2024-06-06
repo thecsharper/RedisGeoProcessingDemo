@@ -24,4 +24,4 @@ app.MapRazorPages();
 
 app.Run();
 
-Console.WriteLine("Husky test");
+Console.WriteLine("Husky testing...");
