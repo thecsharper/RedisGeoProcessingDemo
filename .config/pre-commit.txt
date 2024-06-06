@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo 'Building code'
+dotnet build
+
+echo 'Formatting code'
+dotnet format
+
+echo 'Running tests'
+dotnet test
